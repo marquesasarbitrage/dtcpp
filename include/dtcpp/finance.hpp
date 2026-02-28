@@ -92,12 +92,12 @@ namespace dtcpp {
 
             int getFactor(const Tenor& other) const {return other.getMultiple(*this);}
 
-            bool operator==(const Tenor& other) const {objects::DateTime now{};return (getForwardDate(now,1) == other.getForwardDate(now,1));}
-            bool operator!=(const Tenor& other) const {return !operator==(other);}
-            bool operator>(const Tenor& other) const {objects::DateTime now{};return (getForwardDate(now,1) > other.getForwardDate(now,1));}
-            bool operator>=(const Tenor& other) const {objects::DateTime now{};return (getForwardDate(now,1) >= other.getForwardDate(now,1));}
-            bool operator<=(const Tenor& other) const {objects::DateTime now{};return (getForwardDate(now,1) <= other.getForwardDate(now,1));}
-            bool operator<(const Tenor& other) const {objects::DateTime now{};return (getForwardDate(now,1) < other.getForwardDate(now,1));}
+            bool operator==(Tenor other) const {objects::DateTime now{};return (getForwardDate(now,1) == other.getForwardDate(now,1));}
+            bool operator!=(Tenor other) const {return !operator==(other);}
+            bool operator>(Tenor other) const {objects::DateTime now{};return (getForwardDate(now,1) > other.getForwardDate(now,1));}
+            bool operator>=(Tenor other) const {objects::DateTime now{};return (getForwardDate(now,1) >= other.getForwardDate(now,1));}
+            bool operator<=(Tenor other) const {objects::DateTime now{};return (getForwardDate(now,1) <= other.getForwardDate(now,1));}
+            bool operator<(Tenor other) const {objects::DateTime now{};return (getForwardDate(now,1) < other.getForwardDate(now,1));}
 
         };
 
