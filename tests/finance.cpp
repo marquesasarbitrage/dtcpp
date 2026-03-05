@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cassert>
-#include "dtcpp/finance.hpp"
-#include "dtcpp/bizdays.hpp"
-#include "dtcpp/objects.hpp"
+#include <dtcpp/finance.hpp>
+#include <dtcpp/bizdays.hpp>
+#include <dtcpp/objects.hpp>
 
 bool isClose(double value1, double value2, double eps) {return (std::abs(value2-value1)<eps);}
 
