@@ -27,14 +27,16 @@ namespace dtcpp {
 
             objects::DateTime getForwardDate(const objects::DateTime& date, int n) const {
 
+                objects::DateTime forwardDate;
                 n = std::max(1,n);
                 switch (type_) {
-                case TenorType::DAYS: return date + objects::TimeDelta{n*int(value_),0,0,0,0,0,0};
-                case TenorType::WEEKS: return date + objects::TimeDelta{n*7*int(value_),0,0,0,0,0,0};
-                case TenorType::MONTHS: return date + objects::TimeDelta::Months{n*int(value_)};
-                case TenorType::YEARS: return date + objects::TimeDelta::Years{n*int(value_)};
+                case TenorType::DAYS: forwardDate += objects::TimeDelta{n*int(value_),0,0,0,0,0,0}; break;
+                case TenorType::WEEKS: forwardDate +=  objects::TimeDelta{n*7*int(value_),0,0,0,0,0,0}; break;
+                case TenorType::MONTHS: forwardDate += objects::TimeDelta::Months{n*int(value_)}; break;
+                case TenorType::YEARS: forwardDate += objects::TimeDelta::Years{n*int(value_)}; break;
 
                 }
+                return forwardDate;
             }
 
             int getMultiple(const Tenor& other) const {
