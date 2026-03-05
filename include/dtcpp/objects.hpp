@@ -1,7 +1,10 @@
 #pragma once 
 #include <tuple>
+#include <vector>
 #include <set>
-
+#include <string>
+#include <optional>
+#include <algorithm>
 
 namespace dtcpp {
 
@@ -130,8 +133,8 @@ namespace dtcpp {
                 DateTime(int year, int month, int day, TimeZone timeZone);
                 DateTime(int year, int month, int day, int hour, int minute, int second);
                 DateTime(int year, int month, int day);
-                DateTime(std::string dateString, std::string formatString, TimeZone timeZone);
-                DateTime(std::string dateString, std::string formatString); 
+                DateTime(const std::string& dateString, const std::string&formatString, TimeZone timeZone);
+                DateTime(const std::string& dateString, const std::string& formatString); 
                 ~DateTime(){};
 
                 DateTime operator+(const TimeDelta& other) const; 

@@ -1,5 +1,5 @@
 #include <dtcpp/objects.hpp>
-#include "dtcpp/toolbox.hpp"
+#include <dtcpp/toolbox.hpp>
 
 namespace dtcpp {
 
@@ -45,7 +45,7 @@ namespace dtcpp {
         DateTime(year, month, day, TimeZone::UTC) 
         {}
 
-        DateTime::DateTime(std::string dateString, std::string formatString, TimeZone timeZone)
+        DateTime::DateTime(const std::string& dateString, const std::string& formatString, TimeZone timeZone)
         {
             tmsp_ = toolbox::getTimestampFromCivilDateHourString(dateString, formatString) - static_cast<int>(timeZone)*3600LL;
             type_ = EpochTimestampType::SECONDS;
@@ -53,7 +53,7 @@ namespace dtcpp {
             civilTime_ = toolbox::getCivilFromTimestamp(tmsp_+static_cast<int>(timeZone)*3600LL);
         }
 
-        DateTime::DateTime(std::string dateString, std::string formatString): DateTime(dateString, formatString, TimeZone::UTC) {}
+        DateTime::DateTime(const std::string& dateString, const std::string& formatString): DateTime(dateString, formatString, TimeZone::UTC) {}
 
     } 
 

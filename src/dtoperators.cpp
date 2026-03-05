@@ -1,5 +1,5 @@
 #include <dtcpp/objects.hpp>
-#include "dtcpp/toolbox.hpp"
+#include <dtcpp/toolbox.hpp>
 
 namespace dtcpp {
 
@@ -7,46 +7,26 @@ namespace dtcpp {
 
         DateTime DateTime::operator+(const TimeDelta& other) const {
 
+            long long tmsp = getTimestamp();
             switch(type_){
-                case EpochTimestampType::SECONDS: 
-                {
-                    return DateTime(getTimestamp() + other.getTotalSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::MILLISECONDS: 
-                {
-                    return DateTime(getTimestamp() + other.getTotalMilliSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::MICROSECONDS: 
-                {
-                    return DateTime(getTimestamp() + other.getTotalMicroSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::NANOSECONDS: 
-                {
-                    return DateTime(getTimestamp() + other.getTotalNanoSeconds(), type_, timeZone_);
-                }
+                case EpochTimestampType::SECONDS: {tmsp += other.getTotalSeconds(); break;}
+                case EpochTimestampType::MILLISECONDS: {tmsp += other.getTotalMilliSeconds(); break;}
+                case EpochTimestampType::MICROSECONDS: {tmsp += other.getTotalMicroSeconds(); break;}
+                case EpochTimestampType::NANOSECONDS: {tmsp += other.getTotalNanoSeconds(); break;}
             }
+            return DateTime(getTimestamp() + other.getTotalSeconds(), type_, timeZone_);
         }
 
         DateTime DateTime::operator-(const TimeDelta& other) const {
 
+            long long tmsp = getTimestamp();
             switch(type_){
-                case EpochTimestampType::SECONDS: 
-                {
-                    return DateTime(getTimestamp() - other.getTotalSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::MILLISECONDS: 
-                {
-                    return DateTime(getTimestamp() - other.getTotalMilliSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::MICROSECONDS: 
-                {
-                    return DateTime(getTimestamp() - other.getTotalMicroSeconds(), type_, timeZone_);
-                }
-                case EpochTimestampType::NANOSECONDS: 
-                {
-                    return DateTime(getTimestamp() - other.getTotalNanoSeconds(), type_, timeZone_);
-                }
+                case EpochTimestampType::SECONDS: {tmsp -= other.getTotalSeconds(); break;}
+                case EpochTimestampType::MILLISECONDS: {tmsp -= other.getTotalMilliSeconds(); break;}
+                case EpochTimestampType::MICROSECONDS: {tmsp -= other.getTotalMicroSeconds(); break;}
+                case EpochTimestampType::NANOSECONDS: {tmsp -= other.getTotalNanoSeconds(); break;}
             }
+            return DateTime(getTimestamp() + other.getTotalSeconds(), type_, timeZone_);
         }
 
         TimeDelta DateTime::operator-(const DateTime& other) const {

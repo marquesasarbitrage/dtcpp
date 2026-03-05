@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cassert>
-#include "dtcpp/bizdays.hpp"
+#include <dtcpp/bizdays.hpp>
 
 using namespace dtcpp::bizdays;
 
