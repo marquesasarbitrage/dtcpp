@@ -2,7 +2,6 @@
 #include <tuple>
 #include <set>
 
-
 namespace dtcpp {
 
     namespace objects {
