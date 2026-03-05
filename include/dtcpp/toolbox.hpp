@@ -1,5 +1,6 @@
 #pragma once 
 #include <dtcpp/errors.hpp>
+#include <chrono>
 
 namespace dtcpp {
 
@@ -47,7 +48,7 @@ namespace dtcpp {
                 + second;
         }
 
-        inline long long getTimestampFromCivilDateHourString(std::string dateString, std::string dateFormat) {
+        inline long long getTimestampFromCivilDateHourString(const std::string& dateString, const std::string& dateFormat) {
 
             
             int y, m, d, h = 0, mi = 0, s=0; 
@@ -99,7 +100,7 @@ namespace dtcpp {
             return std::make_tuple(year, month, day, hour, minute, second);
         }
 
-        inline std::string getCivilDateHourStringFromCivilDateHour(int year, int month, int day, int hour, int minute, int second, std::string dateFormat) {
+        inline std::string getCivilDateHourStringFromCivilDateHour(int year, int month, int day, int hour, int minute, int second, const std::string& dateFormat) {
 
             std::string YYYY = std::to_string(year);
             std::string DD = (day < 10 ? "0" : "") + std::to_string(day);
@@ -131,7 +132,7 @@ namespace dtcpp {
             throw errors::Error(errors::ErrorCode::InvalidDateStringFormat);
         }
 
-        inline std::string getCivilDateHourStringFromTimestamp(long long tmsp, std::string dateFormat) {
+        inline std::string getCivilDateHourStringFromTimestamp(long long tmsp, const std::string& dateFormat) {
 
             auto [year,month,day,hour,minute,second] = getCivilFromTimestamp(tmsp); 
             return getCivilDateHourStringFromCivilDateHour(year,month,day,hour,minute,second, dateFormat);
