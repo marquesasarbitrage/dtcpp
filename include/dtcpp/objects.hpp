@@ -4,6 +4,7 @@
 #include <set>
 #include <string>
 #include <optional>
+#include <algorithm>
 
 namespace dtcpp {
 
