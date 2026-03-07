@@ -14,7 +14,7 @@ namespace dtcpp {
                 case EpochTimestampType::MICROSECONDS: {tmsp += other.getTotalMicroSeconds(); break;}
                 case EpochTimestampType::NANOSECONDS: {tmsp += other.getTotalNanoSeconds(); break;}
             }
-            return DateTime(getTimestamp() + other.getTotalSeconds(), type_, timeZone_);
+            return DateTime(tmsp, type_, timeZone_);
         }
 
         DateTime DateTime::operator-(const TimeDelta& other) const {
@@ -26,7 +26,7 @@ namespace dtcpp {
                 case EpochTimestampType::MICROSECONDS: {tmsp -= other.getTotalMicroSeconds(); break;}
                 case EpochTimestampType::NANOSECONDS: {tmsp -= other.getTotalNanoSeconds(); break;}
             }
-            return DateTime(getTimestamp() + other.getTotalSeconds(), type_, timeZone_);
+            return DateTime(tmsp, type_, timeZone_);
         }
 
         TimeDelta DateTime::operator-(const DateTime& other) const {

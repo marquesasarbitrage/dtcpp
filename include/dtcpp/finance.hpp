@@ -27,7 +27,7 @@ namespace dtcpp {
 
             objects::DateTime getForwardDate(const objects::DateTime& date, int n) const {
 
-                objects::DateTime forwardDate;
+                objects::DateTime forwardDate = date;
                 n = std::max(1,n);
                 switch (type_) {
                 case TenorType::DAYS: forwardDate += objects::TimeDelta{n*int(value_),0,0,0,0,0,0}; break;
