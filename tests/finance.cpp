@@ -173,11 +173,12 @@ void testBondScheduler() {
 }
 
 int main() {
-    testYearFraction(); 
+    
     testForwardDateTenor();
     testTenorOperators();
     testTenorGetFactorMultiple();
     testBondScheduler();
+    testYearFraction(); 
     std::cout << "All tests for the finance module have been passed successfully!" << std::endl;
 
 }
