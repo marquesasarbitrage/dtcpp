@@ -111,11 +111,13 @@ namespace dtcpp {
 
         inline bool isBusinessDay(const DateTime& date, HolidayCalendar holidayCalendar) {
 
+            bool result = true;
             switch (holidayCalendar) {
-                case HolidayCalendar::NONE : return true;
-                case HolidayCalendar::WEEK_END_OFF : return !isWeekEnd(date);
-                case HolidayCalendar::US_FEDERAL_RESERVE: return isUSFederalReserveBusiness(date);
+                case HolidayCalendar::NONE : break;
+                case HolidayCalendar::WEEK_END_OFF : result = !isWeekEnd(date);break;
+                case HolidayCalendar::US_FEDERAL_RESERVE: result= isUSFederalReserveBusiness(date);break;
             }
+            return result;
         }
         
         inline DateTime adjustDateFollowing(const DateTime& date, HolidayCalendar holidayCalendar) {
@@ -148,12 +150,14 @@ namespace dtcpp {
         
         inline DateTime adjustDate(const DateTime& date, HolidayCalendar holidayCalendar, BusinessDayConvention businessDayConvention) {
 
+            DateTime result = date;
             switch (businessDayConvention) {
-                case BusinessDayConvention::FOLLOWING: return adjustDateFollowing(date, holidayCalendar);
-                case BusinessDayConvention::PRECEDING: return adjustDatePreceding(date, holidayCalendar);
-                case BusinessDayConvention::MODIFIED_FOLLOWING: return adjustDateModFollowing(date, holidayCalendar);
-                case BusinessDayConvention::MODIFIED_PRECEDING: return adjustDateModPreceding(date, holidayCalendar);
+                case BusinessDayConvention::FOLLOWING: result = adjustDateFollowing(date, holidayCalendar);break;
+                case BusinessDayConvention::PRECEDING: result = adjustDatePreceding(date, holidayCalendar);break;
+                case BusinessDayConvention::MODIFIED_FOLLOWING: result= adjustDateModFollowing(date, holidayCalendar);break;
+                case BusinessDayConvention::MODIFIED_PRECEDING: result= adjustDateModPreceding(date, holidayCalendar);break;
             }
+            return result;
         }
 
         inline DatetimeSequence adjustDatetimeSequence(const DatetimeSequence& sequence, HolidayCalendar holidayCalendar, BusinessDayConvention businessDayConvention) {
