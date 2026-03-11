@@ -6,21 +6,14 @@
 
 void testCheck() {
 
-    dtcpp::toolbox::checkCivilDate(2025,10,12); 
-
-    try { dtcpp::toolbox::checkCivilDate(2025,13,12); assert(false);} 
-    catch (const dtcpp::errors::Error& e) { assert(e.getCode() == dtcpp::errors::ErrorCode::InvalidCivilDate); }
-
-    try { dtcpp::toolbox::checkCivilHour(25,30,30); assert(false);} 
-    catch (const dtcpp::errors::Error& e) { assert(e.getCode() == dtcpp::errors::ErrorCode::InvalidCivilHour); }
-
-    dtcpp::toolbox::checkCivilHour(23,30,30);
-    dtcpp::toolbox::checkCivilHour(0,1,12);
-    dtcpp::toolbox::checkCivilHour(0,0,12);
-    dtcpp::toolbox::checkCivilHour(0,0,0);
-
-    try { dtcpp::toolbox::checkCivilDate(0,0,12); assert(false);} 
-    catch (const dtcpp::errors::Error& e) { assert(e.getCode() == dtcpp::errors::ErrorCode::InvalidCivilDate); }
+    assert(dtcpp::toolbox::isCivilDateValid(2025,10,12)==true); 
+    assert(dtcpp::toolbox::isCivilDateValid(2025,13,12)==false); 
+    assert(dtcpp::toolbox::isCivilHourValid(25,30,30)==false);
+    assert(dtcpp::toolbox::isCivilHourValid(23,30,30)==true);
+    assert(dtcpp::toolbox::isCivilHourValid(0,1,12)==true);
+    assert(dtcpp::toolbox::isCivilHourValid(0,0,12)==true);
+    assert(dtcpp::toolbox::isCivilHourValid(0,0,0)==true); 
+    assert(dtcpp::toolbox::isCivilDateValid(0,0,12)==false);
 }
 
 void testIsLeap() {

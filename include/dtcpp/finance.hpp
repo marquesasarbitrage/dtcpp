@@ -1,5 +1,6 @@
 #pragma once 
 #include <algorithm>
+#include <cassert>
 #include <dtcpp/objects.hpp>
 #include <dtcpp/toolbox.hpp>
 #include <dtcpp/bizdays.hpp>
@@ -166,7 +167,6 @@ namespace dtcpp {
         
         inline double yearFraction(const objects::DateTime& startDate, const objects::DateTime& endDate, DayCountConvention dayCountConvention) {
 
-            if (startDate>endDate) throw errors::Error(errors::ErrorCode::InvalidStartEndDate);
             switch (dayCountConvention){
 
                 case DayCountConvention::ACTUAL_360: return yfAct360(startDate,endDate);
@@ -175,7 +175,7 @@ namespace dtcpp {
                 case DayCountConvention::ACTUAL_ACTUAL: return yfActAct(startDate,endDate);
                 case DayCountConvention::BOND_BASIS30_360: return yfBondBasis30_360(startDate,endDate);
                 case DayCountConvention::E30_360: return yfE30_360(startDate,endDate);
-                default: throw errors::Error(errors::ErrorCode::UnknownDayCountConvention);
+                default: assert(false);
 
             }
         }

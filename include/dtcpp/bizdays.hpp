@@ -28,6 +28,7 @@ namespace dtcpp {
         }
 
         inline bool isChristmas(const DateTime& date) { return (date.getDay()==25 && date.getMonth()==12); }
+
         inline bool isNewYear(const DateTime& date) { return (date.getDay()==1 && date.getMonth()==1); }
 
         inline bool isMartinLutterKingDay(const DateTime& date) {
@@ -55,6 +56,7 @@ namespace dtcpp {
         }
 
         inline bool isUSJuneteenth(const DateTime& date) {return (date.getDay()==19 && date.getMonth()==6);}
+
         inline bool isUSIndependanceDay(const DateTime& date) {return (date.getDay()==4 && date.getMonth()==7);}
 
         inline bool isUSLaborDay(const DateTime& date) {
@@ -116,6 +118,7 @@ namespace dtcpp {
                 case HolidayCalendar::NONE : break;
                 case HolidayCalendar::WEEK_END_OFF : result = !isWeekEnd(date);break;
                 case HolidayCalendar::US_FEDERAL_RESERVE: result= isUSFederalReserveBusiness(date);break;
+                default: assert(false);
             }
             return result;
         }
@@ -156,6 +159,7 @@ namespace dtcpp {
                 case BusinessDayConvention::PRECEDING: result = adjustDatePreceding(date, holidayCalendar);break;
                 case BusinessDayConvention::MODIFIED_FOLLOWING: result= adjustDateModFollowing(date, holidayCalendar);break;
                 case BusinessDayConvention::MODIFIED_PRECEDING: result= adjustDateModPreceding(date, holidayCalendar);break;
+                default: assert(false);
             }
             return result;
         }
