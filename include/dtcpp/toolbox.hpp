@@ -1,5 +1,5 @@
 #pragma once 
-#include <dtcpp/errors.hpp>
+#include <cassert>
 #include <chrono>
 
 namespace dtcpp {
@@ -12,24 +12,26 @@ namespace dtcpp {
 
         inline bool isLeapYear(int year){return ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));}
 
-        inline void checkCivilDate(int year, int month, int day) {
+        inline bool isCivilHourValid(int hour, int minute, int second) {
 
-            if (month > 12 or month < 1)  throw errors::Error(errors::ErrorCode::InvalidCivilDate);
-            int n = (isLeapYear(year) && month ==2) ? 29 : daysInMonth[month-1]; 
-            if (day > n or day < 1)  throw errors::Error(errors::ErrorCode::InvalidCivilDate);
+            if (hour < 0 or hour > 23) return false;
+            if (minute < 0 or minute > 59)  return false;
+            if (second < 0 or second > 59)  return false;
+            return true;
         }
 
-        inline void checkCivilHour(int hour, int minute, int second) {
+        inline bool isCivilDateValid(int year, int month, int day) {
 
-            if (hour < 0 or hour > 23)  throw errors::Error(errors::ErrorCode::InvalidCivilHour);
-            if (minute < 0 or minute > 59)  throw errors::Error(errors::ErrorCode::InvalidCivilHour);
-            if (second < 0 or second > 59)  throw errors::Error(errors::ErrorCode::InvalidCivilHour);
+            if (month > 12 or month < 1)  return false;
+            int n = (isLeapYear(year) && month ==2) ? 29 : daysInMonth[month-1]; 
+            if (day > n or day < 1)  return false;
+            return true;
         }
 
         inline long long getDaysSinceEpoch(int year, int month, int day) {
 
-            // Algorithm from ChatGPT
-            checkCivilDate(year,month,day);
+            //checkCivilDate(year,month,day);
+            assert(isCivilDateValid(year,month,day));
             year -= month <= 2;
             const int era = (year >= 0 ? year : year - 399) / 400;
             const unsigned yoe = static_cast<unsigned>(year - era * 400);
@@ -40,7 +42,8 @@ namespace dtcpp {
 
         inline long long getTimestampFromCivilDateHour(int year, int month, int day, int hour, int minute, int second) {
 
-            checkCivilHour(hour,minute,second);
+            //checkCivilHour(hour,minute,second);
+            assert(isCivilHourValid(hour,minute,second));
             long long days = getDaysSinceEpoch(year, month, day);
             return days * 86400LL
                 + hour   * 3600LL
@@ -60,10 +63,12 @@ namespace dtcpp {
             else if (dateFormat == "YYYY-DD-MM HH:MM:SS") {sscanf(dateString.c_str(), "%d-%d-%d %d:%d:%d", &y, &d, &m, &h, &mi, &s);} 
             else if (dateFormat == "YYYY-MM-DD HH:MM:SS") {sscanf(dateString.c_str(), "%d-%d-%d %d:%d:%d", &y, &m, &d, &h, &mi, &s);} 
             else if (dateFormat == "YYYY/DD/MM HH:MM:SS") {sscanf(dateString.c_str(), "%d-%d-%d %d:%d:%d", &y, &d, &m, &h, &mi, &s);} 
-            else throw errors::Error(errors::ErrorCode::InvalidDateStringFormat);
+            else assert(false);
 
-            checkCivilDate(y, m, d); 
-            checkCivilHour(h, mi, s);
+            //checkCivilDate(y, m, d); 
+            //checkCivilHour(h, mi, s);
+            assert(isCivilDateValid(y,m,d));
+            assert(isCivilHourValid(h,mi,s));
             return getTimestampFromCivilDateHour(y,m,d,h,mi,s);
         }
 
@@ -94,8 +99,11 @@ namespace dtcpp {
             unsigned month = mp + (mp < 10 ? 3 : -9);                     
             int year = y + (month <= 2);
 
-            checkCivilDate(year, month, day); 
-            checkCivilHour(hour,minute,second);
+            //checkCivilDate(year, month, day); 
+            //checkCivilHour(hour,minute,second);
+
+            assert(isCivilDateValid(year,month,day));
+            assert(isCivilHourValid(hour,minute,second));
 
             return std::make_tuple(year, month, day, hour, minute, second);
         }
@@ -129,7 +137,7 @@ namespace dtcpp {
             if (dateFormat == "YYYY/DD/MM HH:MM:SS") return YYYY + "/" + DD + "/" + MM + " " +
                     HH + ":" + MI + ":" + SS;
 
-            throw errors::Error(errors::ErrorCode::InvalidDateStringFormat);
+            return "";
         }
 
         inline std::string getCivilDateHourStringFromTimestamp(long long tmsp, const std::string& dateFormat) {
@@ -188,7 +196,8 @@ namespace dtcpp {
                 day = 28;
             }
 
-            checkCivilDate(year, month, day);
+            //checkCivilDate(year, month, day);
+            assert(isCivilDateValid(year, month, day));
             return std::make_tuple(year, month, day);
         }
 
@@ -208,7 +217,8 @@ namespace dtcpp {
             int maxDay = getDaysInMonth(y, m);
             int d = std::min(day, maxDay);
 
-            checkCivilDate(y, m, d);
+            //checkCivilDate(y, m, d);
+            assert(isCivilDateValid(y, m, d));
             return {y, m, d};
         }
     }
